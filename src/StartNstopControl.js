@@ -35,6 +35,11 @@ class StartNstopControl extends React.Component{
         this.state = {isRunning: props.isRunning};
     }
 
+    componentDidMount() {
+        this.props.onRef(this)
+    }
+
+
     handleStart(){
         this.setState({isRunning: true})
         this.props.setRunning(true)

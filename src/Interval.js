@@ -5,19 +5,45 @@ export default class Interval extends Component{
         super(props);
         this.timeFormater = this.timeFormater.bind(this);
         this.state = {
-            goalTime: props.goalTime,
             currentTime: props.currentTime,
             description: props.description,
+            isRunning: false,
         }
+    }
+
+    componentDidMount() {
+        this.props.onRef(this)
+        this.runTimer()
+    }
+
+    runTimer(){
+        window.setInterval(() => {
+            let seconds = this.state.currentTime
+            if (this.state.isRunning){
+                if (seconds > 0){
+                    this.setState({currentTime: seconds-1})
+                } else {
+                    this.props.incrementCurrentInterval()
+                }
+            }
+        }, 1000)
+    }
+
+    startTimer(){
+        this.setState({isRunning: true})
+    }
+
+    pauseTimer(){
+        this.setState({isRunning: false})
     }
 
     timeFormater(){
         let duration = this.state.currentTime;
 
-        var mins = ~~((duration % 3600) / 60);
-        var secs = ~~duration % 60;
+        let mins = ~~((duration % 3600) / 60);
+        let secs = ~~duration % 60;
 
-        var ret = "";
+        let ret = "";
 
         ret += "" + mins + ":" + (secs < 10 ? "0" : "");
         ret += "" + secs;

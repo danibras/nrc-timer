@@ -11,15 +11,34 @@ class App extends Component {
 		this.state = {
 			isRunning: false,
 			intervals: [],
+			currentInterval: 0
 		}
 	}
 
 	updateRunning (state) {
 		this.setState({isRunning: state});
+		if (state) {
+			this[`interval${this.state.currentInterval}`].startTimer();
+		} else {
+			this[`interval${this.state.currentInterval}`].pauseTimer();
+		}	
 	}
 
 	updateIntervals (state) {
 		this.setState({intervals: state});
+	}
+
+	incrementCurrentInterval () {
+		this.updateRunning(false)
+		console.log(this.state.intervals.length - this.state.currentInterval)
+		if (this.state.intervals.length - this.state.currentInterval > 1){
+			console.log('in')
+			this.setState({currentInterval: this.state.currentInterval + 1});
+			this.updateRunning(true)
+		} else {
+			this.startNstop.handleStop()
+		}
+		
 	}
 
   	render () {
@@ -29,9 +48,10 @@ class App extends Component {
 			intervals.map((interval, index) => {
 				intervalsComponents.push(<Interval
 					key={index}
-					goalTime={interval.goalTime} 
+					onRef={ref => (this[`interval${index}`] = ref)}
 					currentTime={interval.currentTime} 
 					description={interval.description} 
+					incrementCurrentInterval={this.incrementCurrentInterval.bind(this)}
 					/>);
 			})
 		}
@@ -61,7 +81,7 @@ class App extends Component {
 				<div className="overflow-auto max-h-36rem">
 					{intervalsComponents}
 				</div>
-				<StartNstopControl isRunning={this.state.isRunning} setRunning={this.updateRunning.bind(this)}/>
+				<StartNstopControl isRunning={this.state.isRunning} setRunning={this.updateRunning.bind(this)} onRef={ref => (this.startNstop = ref)}/>
 			</div>
   		);
 	}
