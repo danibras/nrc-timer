@@ -4,6 +4,7 @@ import StartNstopControl from './StartNstopControl';
 import NewIntervalControl from './NewIntervalControl';
 import Interval from './Interval';
 import { Component } from 'react';
+import { Helmet } from 'react-helmet'
 
 class App extends Component {
 	constructor(props) {
@@ -30,13 +31,14 @@ class App extends Component {
 
 	incrementCurrentInterval () {
 		this.updateRunning(false)
-		console.log(this.state.intervals.length - this.state.currentInterval)
+		navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
 		if (this.state.intervals.length - this.state.currentInterval > 1){
-			console.log('in')
 			this.setState({currentInterval: this.state.currentInterval + 1});
 			this.updateRunning(true)
+  			navigator.vibrate(500);
 		} else {
 			this.startNstop.handleStop()
+			navigator.vibrate([500,500,500,500,600]);
 		}
 		
 	}
@@ -57,6 +59,9 @@ class App extends Component {
 		}
 	  	return (
 			<div className="App h-full">
+				<Helmet>
+					<title>NRC Timer</title>
+				</Helmet>
 				<header>
 					<div className="flex-1 flex flex-col">
 						<nav className="px-4 flex justify-center bg-black h-16 border-b-2">
@@ -77,7 +82,7 @@ class App extends Component {
 						</nav>
 					</div>
 				</header>
-				<NewIntervalControl intervals={this.state.intervals} updateIntervals={this.updateIntervals.bind(this)}/>
+				{!this.state.isRunning && <NewIntervalControl intervals={this.state.intervals} updateIntervals={this.updateIntervals.bind(this)}/>}
 				<div className="overflow-auto max-h-36rem">
 					{intervalsComponents}
 				</div>

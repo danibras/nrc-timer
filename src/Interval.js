@@ -5,14 +5,20 @@ export default class Interval extends Component{
         super(props);
         this.timeFormater = this.timeFormater.bind(this);
         this.state = {
+            originalTime: props.currentTime.valueOf(),
             currentTime: props.currentTime,
             description: props.description,
+            speech: null,
             isRunning: false,
         }
     }
 
     componentDidMount() {
         this.props.onRef(this)
+        let speech = new SpeechSynthesisUtterance();
+        speech.lang = 'pt-PT';
+        speech.volume = 1;
+        this.setState({speech: speech})
         this.runTimer()
     }
 
@@ -31,6 +37,11 @@ export default class Interval extends Component{
 
     startTimer(){
         this.setState({isRunning: true})
+        if (this.state.originalTime === this.state.currentTime){
+            let speech = this.state.speech
+            speech.text = this.state.description;
+            window.speechSynthesis.speak(speech);
+        }
     }
 
     pauseTimer(){
