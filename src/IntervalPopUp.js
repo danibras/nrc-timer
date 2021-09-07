@@ -33,7 +33,7 @@ export default class IntervalPopUp extends Component {
     render() {
         return (
             <div className="flex justify-center items-center">
-                <div className="py-12 px-12 bg-white rounded-2xl shadow-xl z-20">
+                <div className="pb-12 px-12 bg-white rounded-2xl shadow-xl z-20">
                     <div className="space-y-4">
                         <input type="number" min="0" max="60" onChange={this.handleMinutesChange} defaultValue={this.props.minutes} placeholder="MM" className="text-sm py-3 px-4 mr-2.5 rounded-lg w-5/12 border outline-none"/>
                         :

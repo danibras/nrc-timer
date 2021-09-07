@@ -82,12 +82,11 @@ class App extends Component {
 						</nav>
 					</div>
 				</header>
-				{console.log("app", this.state.isRunning)}
 				<NewIntervalControl intervals={this.state.intervals} isRunning={this.state.isRunning} updateIntervals={this.updateIntervals.bind(this)}/>
 				<div className="overflow-auto max-h-36rem">
 					{intervalsComponents}
 				</div>
-				<StartNstopControl isRunning={this.state.isRunning} setRunning={this.updateRunning.bind(this)} onRef={ref => (this.startNstop = ref)}/>
+				<StartNstopControl intervals={this.state.intervals} isRunning={this.state.isRunning} setRunning={this.updateRunning.bind(this)} onRef={ref => (this.startNstop = ref)}/>
 			</div>
   		);
 	}

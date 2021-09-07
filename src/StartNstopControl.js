@@ -1,9 +1,11 @@
 import React from 'react';
 
 function StartBtn(props) {
+    let disabled = props.disabled
     return(
         <div className="flex justify-items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 flex-1" viewBox="0 0 20 20" fill="currentColor" onClick={props.onClick}>
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 flex-1" viewBox="0 0 20 20" fill={disabled ? "#989898" : "currentColor" }
+             onClick={disabled ?  null : props.onClick}>
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
             </svg>
         </div>
@@ -62,7 +64,7 @@ class StartNstopControl extends React.Component{
         if (isRunning) {
             button = <div className="flex justify-items-center"> <PauseBtn onClick={this.handlePauseClick}/> <EndBtn onClick={this.handleStopClick}/></div>
         } else {
-            button = <StartBtn onClick={this.handleStartClick}/>
+            button = <StartBtn onClick={this.handleStartClick} disabled={(this.props.intervals.length > 0) ? false : true}/>
         }
 
         return (
