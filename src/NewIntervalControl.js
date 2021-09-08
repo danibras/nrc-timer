@@ -36,8 +36,8 @@ class NewIntervalControl extends React.Component{
         updatedIntervals.push(
                 {
                     key: this.state.intervals.length + 1,
-                    goalTime: interval.minutes + ":" + interval.seconds,
-                    currentTime: interval.minutes*60 + interval.seconds,
+                    goalTime: parseInt(interval.minutes) + ":" + parseInt(interval.seconds),
+                    currentTime: parseInt(interval.minutes)*60 + parseInt(interval.seconds),
                     description: interval.description
                 }
             )
