@@ -16,9 +16,10 @@ class NewIntervalControl extends React.Component{
         this.hidePopUp = this.hidePopUp.bind(this);
         this.handleSave = this.handleSave.bind(this);
         this.state = {
-            intervals: props.intervals,
+            intervals: null,
             viewPopUp: false,
-            isRunning: props.isRunning
+            isRunning: props.isRunning,
+            key: 0,
         }
     }
 
@@ -32,17 +33,18 @@ class NewIntervalControl extends React.Component{
 
     handleSave(interval){
         this.hidePopUp()
-        let updatedIntervals = this.state.intervals
+        let updatedIntervals = this.props.intervals
+        this.setState({key: this.state.key + 1})
         updatedIntervals.push(
                 {
-                    key: this.state.intervals.length + 1,
+                    key: this.state.key,
                     goalTime: parseInt(interval.minutes) + ":" + parseInt(interval.seconds),
                     currentTime: parseInt(interval.minutes)*60 + parseInt(interval.seconds),
                     description: interval.description
                 }
             )
         this.setState({intervals: updatedIntervals})
-        this.props.updateIntervals(this.state.intervals)
+        this.props.updateIntervals(this.props.intervals)
     }
 
     render() {
