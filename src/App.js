@@ -49,7 +49,7 @@ class App extends Component {
 	incrementCurrentInterval () {
 		this.updateRunning(false)
 		navigator.vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate;
-		if (this.state.intervals.length - this.state.currentInterval > 1){
+		if (this.state.intervals[this.state.intervals.length-1].key !== this.state.currentInterval){
 			this.setState({currentInterval: this.state.currentInterval + 1});
 			this.updateRunning(true)
   			navigator.vibrate(500);
