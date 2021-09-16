@@ -10,7 +10,7 @@ export default class IntervalPopUp extends Component {
         this.state = {
             minutes: this.prettyTime(this.props.minutes),
             seconds: this.prettyTime(this.props.seconds),
-            description: '',
+            description: this.props.description,
         }
     }
 
@@ -71,7 +71,7 @@ export default class IntervalPopUp extends Component {
                             <button onClick={this.addSeconds.bind(this, 5)} className="p-1 m-2 w-16 text-white bg-black rounded-lg">5s</button>
                         </div>
 
-                        <input type="text" onChange={this.handleDescriptionChange} placeholder={this.props.description} className="text-sm py-3 px-4 rounded-lg w-11/12 border outline-none"/>
+                        <input type="text" onChange={this.handleDescriptionChange} placeholder="Description" value={this.state.description} className="text-sm py-3 px-4 rounded-lg w-11/12 border outline-none"/>
                     </div>
                     <div className="text-center mt-6">
                         <button className="py-3 w-64 text-xl text-white bg-black rounded-2xl" onClick={this.handleSave}>Save</button>

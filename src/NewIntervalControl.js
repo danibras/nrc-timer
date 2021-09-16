@@ -51,7 +51,7 @@ class NewIntervalControl extends React.Component{
         return (
             <div>
                 <NewIntervalBtn onClick={this.showPopUp} disabled={this.props.isRunning}/>
-                {(this.state.viewPopUp) ? <IntervalPopUp minutes={0} seconds={0} description="Description" handleSave={this.handleSave}/> : ''}
+                {(this.state.viewPopUp) ? <IntervalPopUp minutes={0} seconds={0} description="" handleSave={this.handleSave}/> : ''}
             </div>     
         )
     }
