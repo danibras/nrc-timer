@@ -16,11 +16,11 @@ class App extends Component {
 		}
 	}
 
-	intervalExists (key) {
+	getIntervalIndex(key){
 		let intervals = this.state.intervals
 		for (let i = 0; i < intervals.length; i++) {
 			if (intervals[i].key === key){
-				return true
+				return i 
 			}
 		}
 		return false
@@ -30,13 +30,10 @@ class App extends Component {
 		this.setState({isRunning: state});
 
 		if (state) {
-			if (!this.intervalExists(this.state.currentInterval)){
-				this.setState({currentInterval: this.state.intervals[0].key})
-				this[`interval${this.state.intervals[0].key}`].startTimer();
-			} else {
-				this[`interval${this.state.currentInterval}`].startTimer();
+			while (this.getIntervalIndex(this.state.currentInterval) === false){
+				this.setState({currentInterval: this.state.currentInterval+1})
 			}
-			
+			this[`interval${this.state.currentInterval}`].startTimer();
 		} else {
 			this[`interval${this.state.currentInterval}`].pauseTimer();
 		}	
@@ -61,8 +58,15 @@ class App extends Component {
 	}
 
 	removeInterval (index) {
-		let newIntervals = this.state.intervals.filter(item => item.key!== (index)+1);
+		let newIntervals = this.state.intervals.filter(item => item.key!== (index));
 		this.setState({intervals: newIntervals})
+	}
+
+	updateInterval (interval) {
+		let index = this.getIntervalIndex(interval.key)
+		let intervals = this.state.intervals
+		intervals[index] = interval
+		this.setState({intervals: intervals})
 	}
 
   	render () {
@@ -73,11 +77,12 @@ class App extends Component {
 				intervalsComponents.push(<Interval
 					key={interval.key-1}
 					onRef={ref => (this[`interval${interval.key}`] = ref)}
-					index={interval.key-1}
+					index={interval.key}
 					currentTime={interval.currentTime} 
 					description={interval.description} 
 					anyTimerRunning={this.state.isRunning}
 					incrementCurrentInterval={this.incrementCurrentInterval.bind(this)}
+					updateInterval={this.updateInterval.bind(this)}
 					removeInterval={this.removeInterval.bind(this)}
 					/>);
 			})

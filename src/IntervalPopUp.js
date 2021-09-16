@@ -8,8 +8,8 @@ export default class IntervalPopUp extends Component {
         this.handleSecondsChange = this.handleSecondsChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.state = {
-            minutes: "00",
-            seconds: "00",
+            minutes: this.prettyTime(this.props.minutes),
+            seconds: this.prettyTime(this.props.seconds),
             description: '',
         }
     }
